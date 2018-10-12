@@ -317,7 +317,8 @@ class ZulipBackend(ErrBot):
 
     def prefix_groupchat_reply(self, message, identifier):
         super().prefix_groupchat_reply(message, identifier)
-        message.body = '@**{0}** {1}'.format(identifier.full_name, message.body)
+        formatted_identifier = identifier.full_name if hasattr(identifier, 'full_name') else identifier
+        message.body = '@**{0}** {1}'.format(formatted_identifier, message.body)
 
     def _zulip_upload_stream(self, stream):
         """Perform upload defined in a stream."""
